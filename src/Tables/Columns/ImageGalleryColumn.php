@@ -4,6 +4,7 @@ namespace Alsaloul\ImageGallery\Tables\Columns;
 
 use Closure;
 use Filament\Tables\Columns\Column;
+use Illuminate\Support\Facades\Storage;
 
 class ImageGalleryColumn extends Column
 {
@@ -30,6 +31,10 @@ class ImageGalleryColumn extends Column
     protected bool | Closure $showRemainingText = true;
 
     protected string | Closure $emptyText = 'No images';
+
+    protected string | Closure | null $disk = null;
+
+    protected string | Closure $visibility = 'public';
 
     public function thumbWidth(int | Closure $width): static
     {
@@ -165,6 +170,30 @@ class ImageGalleryColumn extends Column
         return $this->evaluate($this->emptyText);
     }
 
+    public function disk(string | Closure | null $disk): static
+    {
+        $this->disk = $disk;
+
+        return $this;
+    }
+
+    public function getDisk(): ?string
+    {
+        return $this->evaluate($this->disk);
+    }
+
+    public function visibility(string | Closure $visibility): static
+    {
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
+    public function getVisibility(): string
+    {
+        return $this->evaluate($this->visibility);
+    }
+
     /**
      * Get normalized image URLs from state
      */
@@ -176,18 +205,42 @@ class ImageGalleryColumn extends Column
             return [];
         }
 
-        return collect($state)->map(function ($item) {
+        $disk = $this->getDisk();
+        $visibility = $this->getVisibility();
+
+        return collect($state)->map(function ($item) use ($disk, $visibility) {
+            $path = null;
+            
             if (is_string($item)) {
-                return $item;
-            }
-            if (is_array($item)) {
-                return $item['image'] ?? $item['url'] ?? null;
-            }
-            if (is_object($item)) {
-                return $item->image ?? $item->url ?? null;
+                $path = $item;
+            } elseif (is_array($item)) {
+                $path = $item['image'] ?? $item['url'] ?? $item['path'] ?? null;
+            } elseif (is_object($item)) {
+                $path = $item->image ?? $item->url ?? $item->path ?? null;
             }
 
-            return null;
+            if (empty($path)) {
+                return null;
+            }
+
+            // If it's already a full URL, return as-is
+            if (filter_var($path, FILTER_VALIDATE_URL)) {
+                return $path;
+            }
+
+            // If disk is specified, generate URL from storage
+            if ($disk) {
+                $storage = Storage::disk($disk);
+                
+                if ($visibility === 'private') {
+                    return $storage->temporaryUrl($path, now()->addMinutes(5));
+                }
+                
+                return $storage->url($path);
+            }
+
+            // Default: return path as-is (might be relative URL)
+            return $path;
         })->filter()->values()->toArray();
     }
 }

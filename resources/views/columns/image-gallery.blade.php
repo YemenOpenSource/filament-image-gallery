@@ -51,17 +51,15 @@
     data-viewer-gallery
     wire:ignore.self
 >
-    @forelse($visibleUrls as $src)
+    @foreach($visibleUrls as $src)
         <img
             src="{{ $src }}"
             loading="lazy"
-            class="object-cover {{ $borderColorClass }} shadow-sm {{ $borderRadiusClass }} hover:scale-110 transition cursor-zoom-in"
+            class="object-cover {{ $borderColorClass }} shadow-sm {{ $borderRadiusClass }} hover:scale-110 transition cursor-pointer"
             style="width: {{ $width }}px; height: {{ $height }}px; min-width: {{ $width }}px; {{ $ringStyle }}"
             alt="image"
         />
-    @empty
-        <span class="text-sm text-gray-400 dark:text-gray-500">{{ $getEmptyText() }}</span>
-    @endforelse
+    @endforeach
 
     @if($shouldShowRemainingText() && $remaining > 0)
         <span class="flex items-center justify-center text-xs font-medium text-gray-600 dark:text-gray-200"

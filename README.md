@@ -28,12 +28,6 @@ A Filament plugin for displaying image galleries with zoom, rotate, flip, and fu
 composer require al-saloul/filament-image-gallery
 ```
 
-Optionally, publish the config file:
-
-```bash
-php artisan vendor:publish --tag=image-gallery-config
-```
-
 ## Usage
 
 ### Table Column
@@ -87,8 +81,8 @@ ImageGalleryEntry::make('images')
 |--------|-------------|---------|
 | `disk(string)` | Storage disk for images | `null` |
 | `visibility(string)` | `'public'` or `'private'` | `'public'` |
-| `thumbWidth(int)` | Thumbnail width in pixels | `128` |
-| `thumbHeight(int)` | Thumbnail height in pixels | `128` |
+| `thumbWidth(int)` | Thumbnail width in pixels | `null` (natural size) |
+| `thumbHeight(int)` | Thumbnail height in pixels | `null` (natural size) |
 | `imageGap(string)` | Tailwind gap class | `'gap-4'` |
 | `rounded(string)` | Tailwind rounded class | `'rounded-lg'` |
 | `wrapperClass(string)` | Additional wrapper classes | `null` |
@@ -133,6 +127,24 @@ ImageGalleryColumn::make('images')
     ->stacked(3)
     ->ring(2, '#3b82f6')
     ->limit(3)
+```
+
+### Natural Size (No Thumbnail Dimensions)
+```php
+// Images display at their natural size
+ImageGalleryEntry::make('images')
+    ->disk(config('filesystems.default'))
+    ->imageGap('gap-4'),
+```
+
+---
+
+## Configuration (Optional)
+
+Optionally, publish the config file:
+
+```bash
+php artisan vendor:publish --tag=image-gallery-config
 ```
 
 ---

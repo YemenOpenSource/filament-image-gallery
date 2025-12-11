@@ -2,6 +2,11 @@
 
 All notable changes to `filament-image-gallery` will be documented in this file.
 
+## v2.0.5 - 2024-12-11
+
+### Fixed
+- Image clicks no longer trigger Filament's table row navigation (`recordUrl`). Users no longer need to add `->recordUrl(null)` to their tables to use the image preview feature.
+
 ## v2.0.1 - 2024-12-11
 
 ### Added

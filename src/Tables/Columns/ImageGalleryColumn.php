@@ -36,6 +36,15 @@ class ImageGalleryColumn extends Column
 
     protected string | Closure $visibility = 'public';
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Disable the anchor tag wrapper so clicks can reach Viewer.js
+        $this->disabledClick();
+    }
+
+
     public function thumbWidth(int | Closure | null $width): static
     {
         $this->thumbWidth = $width;

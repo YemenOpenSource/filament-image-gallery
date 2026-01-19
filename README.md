@@ -33,6 +33,7 @@ A Filament plugin for displaying image galleries with zoom, rotate, flip, and fu
 
 | Version | Filament | PHP | Laravel |
 |---------|----------|-----|---------|
+| 3.x | 3.x \| 4.x \| 5.x | ^8.2 | ^10.0 \| ^11.0 \| ^12.0 |
 | 2.x | 3.x \| 4.x | ^8.2 | ^10.0 \| ^11.0 \| ^12.0 |
 | 1.x | 3.x | ^8.1 | ^10.0 \| ^11.0 |
 

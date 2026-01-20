@@ -42,29 +42,36 @@
                 @if ($isCircular) aspect-ratio: 1 / 1;
                     border-radius: 50%; @endif
                 @if ($isStacked && $index > 0) margin-inline-start: {{ $stackedMargin }}; @endif
+                @if ($isStacked) ring-color: rgb(var(--primary-500)); box-shadow: 0 0 0 3px rgb(var(--primary-500)); @endif
             "
             {{ $getExtraImgAttributeBag()->class([
                 'max-w-none object-cover object-center',
                 'rounded-full' => $isCircular,
                 'rounded-lg' => $isSquare,
-                'ring-white dark:ring-gray-900' => $isStacked,
-                'ring-2' => $isStacked && $overlap > 0,
             ]) }} />
     @endforeach
 
     @if ($remaining > 0 && ($limitedRemainingText ?? true))
-        <div style="
-                min-height: {{ $defaultHeight }};
-                min-width: {{ $defaultWidth }};
-                height: {{ $defaultHeight }};
-                width: {{ $defaultWidth }};
-                @if ($isStacked) margin-inline-start: {{ $stackedMargin }}; @endif
-            "
-            @class(['flex items-center justify-center font-medium text-gray-500'])>
-            <span class="-ms-0.5 text-xs">
+        @php
+            $showBadge = ($getExtraAttributes()['data-remaining-text-badge'] ?? 'false') === 'true';
+        @endphp
+
+        @if ($showBadge)
+            {{-- Badge style --}}
+            <div
+                style="position: relative; margin-inline-start: -1rem; align-self: flex-start; margin-top: -0.3rem; z-index: 99;">
+                <x-filament::badge size="sm" color="primary"
+                    class="!rounded-full !aspect-square !p-0 !min-w-6 !h-6 !justify-center"
+                    style="height: 26px; border-radius: 50%;">
+                    +{{ $remaining }}
+                </x-filament::badge>
+            </div>
+        @else
+            {{-- Plain text style --}}
+            <span class="text-xs font-medium text-gray-500 dark:text-gray-400 shrink-0">
                 +{{ $remaining }}
             </span>
-        </div>
+        @endif
     @endif
 </div>
 

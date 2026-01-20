@@ -39,6 +39,8 @@
                 height: {{ $defaultHeight }};
                 width: {{ $defaultWidth }};
                 cursor: pointer;
+                @if ($isCircular) aspect-ratio: 1 / 1;
+                    border-radius: 50%; @endif
                 @if ($isStacked && $index > 0) margin-inline-start: {{ $stackedMargin }}; @endif
             "
             {{ $getExtraImgAttributeBag()->class([

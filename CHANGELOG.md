@@ -2,15 +2,17 @@
 
 All notable changes to `filament-image-gallery` will be documented in this file.
 
-## v3.0.0 - 2026-01-19
+## v3.0.0 - 2026-01-21
 
 ### Added
 - Support for Filament v5.x
 - Backward compatibility maintained with Filament v3.x and v4.x
+- Added `remainingTextBadge()` method to control whether the remaining count is displayed as a badge or plain text
+- Improved stacked layout with better RTL support and customizable overlap
 
 ### Changed
 - Updated all Filament package dependencies to support `^3.0 || ^4.0 || ^5.0`
-- Compatible with Filament v3.x, v4.x, and v5.x
+- Replaced Tailwind-based stacking with inline styles for better reliability across different CSS configurations
 
 ## v2.1.4 - 2025-12-17
 

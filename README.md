@@ -112,7 +112,8 @@ ImageGalleryColumn::make('images')
 | `circular(bool)` | Circular shape | `false` |
 | `ring(int, string)` | Border ring with width and color | `1, null` |
 | `ringColor(string)` | Set ring color separately | `null` |
-| `limitedRemainingText(bool)` | Show "+N" badge for remaining | `true` |
+| `limitedRemainingText(bool)` | Show "+N" text for remaining images | `true` |
+| `remainingTextBadge(bool)` | Whether to show remaining text as a badge (true) or plain text (false) | `false` |
 
 ---
 
@@ -187,6 +188,15 @@ ImageGalleryColumn::make('images')
     ->circular()
     ->stacked(3)
     ->limit(3)
+    ->remainingTextBadge() // Show as a Filament badge
+```
+
+### Remaining Text Customization
+```php
+ImageGalleryColumn::make('images')
+    ->limit(3)
+    ->limitedRemainingText(true)  // Show the "+N" text
+    ->remainingTextBadge(true)    // Format as a badge (default is plain text)
 ```
 
 ### Natural Size (No Thumbnail Dimensions)

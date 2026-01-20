@@ -22,13 +22,13 @@
 @endphp
 
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
-    <div id="{{ $galleryId }}"
-        class="image-gallery flex overflow-x-auto {{ $gap }} my-2 pb-2 select-none {{ $wrapperClass }}"
+    <div id="{{ $galleryId }}" class="fi-in-image image-gallery {{ $gap }} my-2 pb-2 select-none {{ $wrapperClass }}"
+        style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto; max-width: 100%; scrollbar-width: thin; cursor: pointer;"
         data-viewer-gallery>
         @foreach ($urls as $src)
             <img src="{{ $src }}" loading="lazy"
                 class="{{ $rounded }} shadow object-cover border border-gray-200 dark:border-gray-700 hover:scale-105 transition cursor-pointer"
-                @if ($sizeStyle) style="{{ $sizeStyle }}" @endif alt="image" />
+                style="{{ $sizeStyle }} flex-shrink: 0;" alt="image" />
         @endforeach
     </div>
 </x-dynamic-component>

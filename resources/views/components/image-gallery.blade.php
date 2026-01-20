@@ -31,7 +31,8 @@
 @endphp
 
 <div id="{{ $galleryId }}"
-    class="image-gallery flex overflow-x-auto {{ $gap }} my-4 pb-2 select-none {{ $wrapperClass }}"
+    class="fi-in-image image-gallery {{ $gap }} my-4 pb-2 select-none {{ $wrapperClass }}"
+    style="display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto; max-width: 100%; scrollbar-width: thin; cursor: pointer;"
     data-viewer-gallery>
     @forelse($urls as $src)
         <img src="{{ $src }}" loading="lazy"
